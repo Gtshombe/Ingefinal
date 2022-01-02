@@ -1,0 +1,28 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button ></ion-back-button>
+    </ion-buttons>
+    <ion-title class="main-header4">{{serviceName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding>
+<ion-grid fixed class="ion-no-padding">
+      <ion-grid class="ion-margin-top ion-padding-top">
+          <ion-row wrap>
+              <ion-col tappable size-lg="4" size-md="4" size-sm="6" size="6" class="ion-padding"
+                  *ngFor="let ingetarif of ingetarifs" >
+                  <ion-card mode="ios" class="food-main-card food-card-tall ion-margin-bottom"
+                      routerLink="/detail/{{ingetarif.userProfile.id}}">
+
+                      <div class="food-div-tall-bg" [ngStyle]="{'background-image': 'url(' + ingetarif.userProfile.image+ ')'}"></div>
+                      <div class="margin-top-5 main-header10" text-wrap>{{ingetarif.userProfile.firstname}}</div>
+                      <ion-icon style="font-size: 12px !important;" color="warning" *ngFor="let i of [0,1,2,3,4]"
+                          [name]="i < ingetarif.ingeson.avg_note ? 'star' : 'star-outline'"></ion-icon>
+                  </ion-card>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+ </ion-grid>
+</ion-content>
