@@ -1,15 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MenuController, NavController } from "@ionic/angular";
-import { IonicComponentService } from "../../services/ionic-component.service";
-import { UserService } from "../../services/user.service";
-
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MenuController, NavController } from '@ionic/angular';
+import { IonicComponentService } from '../../services/ionic-component.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
-  selector: "app-fire-signin",
-  templateUrl: "./fire-signin.page.html",
-  styleUrls: ["./fire-signin.page.scss"],
+  selector: 'app-fire-signin',
+  templateUrl: './fire-signin.page.html',
+  styleUrls: ['./fire-signin.page.scss'],
 })
 export class FireSigninPage implements OnInit {
   public showPassword: boolean = false;
@@ -31,7 +30,8 @@ export class FireSigninPage implements OnInit {
     //this.catId = this.activatedRoute.snapshot.paramMap.get('catId');
     /// console.log("CatId="+this.catId);
 
-    let EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    let EMAIL_REGEXP =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
     // this.registerForm = fb.group({
     //let Email_Val =     /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
@@ -53,57 +53,55 @@ export class FireSigninPage implements OnInit {
 
     this.loginForm = formBuilder.group({
       username: [
-        "",
+        '',
         Validators.compose([Validators.minLength(3), Validators.required]),
       ],
-      password: ["", Validators.compose([Validators.required])],
+      password: ['', Validators.compose([Validators.required])],
     });
   }
 
   ngOnInit() {
-    this.redirectUrl = this.activatedRoute.snapshot.queryParamMap.get(
-      "redirectUrl"
-    );
+    this.redirectUrl =
+      this.activatedRoute.snapshot.queryParamMap.get('redirectUrl');
     // const secondParam: string = this.route.snapshot.queryParamMap.get('secondParamKey');
-    console.log("redirectUrl=" + this.redirectUrl);
+    console.log('redirectUrl=' + this.redirectUrl);
     // this.ionicComponentService.presentToast(
     //   "Demo account: <br>username = lucky@gmail.com  <br>password= 123456",
     //   10000
     // );
-
   }
 
   submitFormTest() {
     if (!this.loginForm.valid) {
       console.log(this.loginForm.value);
       //this.presentAlert("invalid form");
-      console.log("invalid form");
+      console.log('invalid form');
     } else {
       console.log(this.loginForm.value);
-      console.log("yes, ");
+      console.log('yes, ');
       //this.userService.loginUser()
     }
   }
 
   register() {
     if (this.redirectUrl) {
-      this.router.navigateByUrl("/fire-signup?redirectUrl=" + this.redirectUrl);
+      this.router.navigateByUrl('/fire-signup?redirectUrl=' + this.redirectUrl);
     } else {
-      this.router.navigateByUrl("/fire-signup");
+      this.router.navigateByUrl('/fire-signup');
     }
   }
   forgot() {
-    this.router.navigateByUrl("/fire-forgot");
+    this.router.navigateByUrl('/fire-forgot');
   }
   login() {
     if (!this.loginForm.valid) {
       console.log(this.loginForm.value);
       //this.presentAlert("invalid form");
-      console.log("invalid form");
+      console.log('invalid form');
     } else {
       this.ionicComponentService.presentLoading();
       console.log(this.loginForm.value);
-      console.log("yes, ");
+      console.log('yes, ');
       this.userService
         .signinUser(
           this.loginForm.value.username,
@@ -111,18 +109,18 @@ export class FireSigninPage implements OnInit {
         )
         .then(
           (authData) => {
-            console.log("Auth pass");
+            console.log('Auth pass');
             this.ionicComponentService.dismissLoading();
             if (this.redirectUrl) {
-              this.router.navigateByUrl("/" + this.redirectUrl);
+              this.router.navigateByUrl('/' + this.redirectUrl);
             } else {
-              this.router.navigateByUrl("/home");
+              this.router.navigateByUrl('/home');
             }
           },
           (error) => {
             //var errorMessage: string = error.message;
             this.ionicComponentService.dismissLoading();
-            console.log("Error:" + error.message);
+            console.log('Error:' + error.message);
             this.ionicComponentService.presentAlert(error.message);
           }
         );
